@@ -6,8 +6,13 @@ import com.liliesrosie.domain.activity.service.trial.AbstractGroupBuyMarketSuppo
 import com.liliesrosie.domain.activity.service.trial.factory.DefaultActivityStrategyFactory;
 import com.liliesrosie.types.design.framework.tree.AbstractStrategyRouter;
 import com.liliesrosie.types.design.framework.tree.StrategyHandler;
+import com.liliesrosie.types.enums.ResponseCode;
+import com.liliesrosie.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author lingwenxu
@@ -19,13 +24,22 @@ import org.springframework.stereotype.Service;
 public class RootNode extends AbstractGroupBuyMarketSupport {
 
 
+    @Resource
+    private SwitchNode switchNode;
+
     @Override
-    public TrialBalanceEntity apply(MarketProductEntity requestParameter, DefaultActivityStrategyFactory.DynamicContext dynamicContext) throws Exception {
+    public TrialBalanceEntity doApply(MarketProductEntity requestParameter, DefaultActivityStrategyFactory.DynamicContext dynamicContext) throws Exception {
+        if(StringUtils.isBlank(requestParameter.getUserId()) ||
+                StringUtils.isBlank(requestParameter.getSource()) ||
+                StringUtils.isBlank(requestParameter.getChannel()) ||
+                StringUtils.isBlank(requestParameter.getGoodsId()) ){
+            throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
+        }
         return null;
     }
 
     @Override
     public StrategyHandler<MarketProductEntity, DefaultActivityStrategyFactory.DynamicContext, TrialBalanceEntity> get(MarketProductEntity requestParameter, DefaultActivityStrategyFactory.DynamicContext dynamicContext) throws Exception {
-        return null;
+        return switchNode;
     }
 }
