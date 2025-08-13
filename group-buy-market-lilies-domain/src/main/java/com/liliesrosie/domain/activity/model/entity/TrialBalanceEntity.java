@@ -1,5 +1,10 @@
 package com.liliesrosie.domain.activity.model.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -8,6 +13,10 @@ import java.util.Date;
  * @description Trial Balance entity object (used to display the group-buy discount information to the user)
  * @create 2025-08-10 12:10
  */
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class TrialBalanceEntity {
 
     /** goods ID */

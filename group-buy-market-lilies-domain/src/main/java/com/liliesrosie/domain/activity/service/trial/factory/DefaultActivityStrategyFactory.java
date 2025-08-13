@@ -2,6 +2,8 @@ package com.liliesrosie.domain.activity.service.trial.factory;
 
 import com.liliesrosie.domain.activity.model.entity.MarketProductEntity;
 import com.liliesrosie.domain.activity.model.entity.TrialBalanceEntity;
+import com.liliesrosie.domain.activity.model.valobj.GroupBuyActivityDiscountVO;
+import com.liliesrosie.domain.activity.model.valobj.GroupBuyProductVO;
 import com.liliesrosie.domain.activity.service.trial.node.RootNode;
 import com.liliesrosie.types.design.framework.tree.StrategyHandler;
 import lombok.AllArgsConstructor;
@@ -24,6 +26,9 @@ public class DefaultActivityStrategyFactory {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class DynamicContext {
+        private GroupBuyActivityDiscountVO groupBuyActivityDiscountVO;
+        // 商品信息
+        private GroupBuyProductVO groupBuyProductVO;
     }
 
     private final RootNode rootNode;
