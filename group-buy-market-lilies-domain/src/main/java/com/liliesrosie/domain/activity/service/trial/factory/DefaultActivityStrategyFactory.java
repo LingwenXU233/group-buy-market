@@ -12,6 +12,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 /**
  * @author lingwenxu
  * @description
@@ -26,9 +28,12 @@ public class DefaultActivityStrategyFactory {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class DynamicContext {
+        // 活动折扣信息
         private GroupBuyActivityDiscountVO groupBuyActivityDiscountVO;
         // 商品信息
         private GroupBuyProductVO groupBuyProductVO;
+        // 折扣价格
+        private BigDecimal deductionPrice;
     }
 
     private final RootNode rootNode;

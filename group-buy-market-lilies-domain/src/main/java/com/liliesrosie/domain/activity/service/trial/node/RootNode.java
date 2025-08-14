@@ -1,5 +1,6 @@
 package com.liliesrosie.domain.activity.service.trial.node;
 
+import com.alibaba.fastjson.JSON;
 import com.liliesrosie.domain.activity.model.entity.MarketProductEntity;
 import com.liliesrosie.domain.activity.model.entity.TrialBalanceEntity;
 import com.liliesrosie.domain.activity.service.trial.AbstractGroupBuyMarketSupport;
@@ -29,13 +30,14 @@ public class RootNode extends AbstractGroupBuyMarketSupport {
 
     @Override
     public TrialBalanceEntity doApply(MarketProductEntity requestParameter, DefaultActivityStrategyFactory.DynamicContext dynamicContext) throws Exception {
+        log.info("拼团商品查询试算服务-RootNode userId:{} requestParameter:{}", requestParameter.getUserId(), JSON.toJSONString(requestParameter));
         if(StringUtils.isBlank(requestParameter.getUserId()) ||
                 StringUtils.isBlank(requestParameter.getSource()) ||
                 StringUtils.isBlank(requestParameter.getChannel()) ||
                 StringUtils.isBlank(requestParameter.getGoodsId()) ){
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER.getCode(), ResponseCode.ILLEGAL_PARAMETER.getInfo());
         }
-        return null;
+        return router(requestParameter, dynamicContext);
     }
 
     @Override
