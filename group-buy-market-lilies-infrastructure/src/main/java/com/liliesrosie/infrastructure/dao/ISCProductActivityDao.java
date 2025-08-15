@@ -11,5 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ISCProductActivityDao {
 
-    SCProductActivity querySCProductActivity(SCProductActivity scProductActivityReq);
+    SCProductActivity querySCProductActivity(SCProductActivity scProductActivity);
 }
