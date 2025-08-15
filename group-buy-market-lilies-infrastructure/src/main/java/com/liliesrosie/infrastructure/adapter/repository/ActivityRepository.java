@@ -90,6 +90,7 @@ public class ActivityRepository implements IActivityRepository {
     @Override
     public GroupBuyProductVO queryProductByGoodsIdList(String goodsId) {
         GroupBuyProduct sku = groupBuyProductDao.queryProductByGoodsIdList(goodsId);
+        if(sku == null) return null;
         return GroupBuyProductVO.builder()
                 .goodsId(sku.getGoodsId())
                 .goodsName(sku.getGoodsName())
