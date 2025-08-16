@@ -1,11 +1,16 @@
 package com.liliesrosie.domain.activity.model.valobj;
 
+import com.liliesrosie.types.common.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author lingwenxu
@@ -51,6 +56,36 @@ public class GroupBuyActivityDiscountVO {
     /** 人群标签规则范围 */
     private String tagScope;
 
+    public Boolean isVisible(){
+        // 没有配置限制，默认可见
+        if(StringUtils.isBlank(this.tagScope))return TagScopeEnumVO.VISIBLE.getAllow();
+
+        List<String> tagScopeList = Arrays.asList(tagScope.split(Constants.SPLIT));
+
+        if(tagScopeList.contains(TagScopeEnumVO.VISIBLE.getOrder())){
+            // 配置了可见限制 → 默认不可见
+            return TagScopeEnumVO.VISIBLE.getRefuse();
+        }
+        // 没配置限制 → 可见
+        return TagScopeEnumVO.VISIBLE.getAllow();
+
+    }
+
+    public Boolean isEnable(){
+        // 没有配置限制，默认可参与
+        if(StringUtils.isBlank(this.tagScope))return TagScopeEnumVO.ENABLE.getAllow();
+
+        List<String> tagScopeList = Arrays.asList(tagScope.split(Constants.SPLIT));
+
+        if(tagScopeList.contains(TagScopeEnumVO.ENABLE.getOrder())){
+            // 配置了可见限制 → 默认不可参与
+            return TagScopeEnumVO.ENABLE.getRefuse();
+        }
+        // 没配置限制 → 可参与
+        return TagScopeEnumVO.ENABLE.getAllow();
+
+    }
+
     @Getter
     @Builder
     @AllArgsConstructor
@@ -85,6 +120,8 @@ public class GroupBuyActivityDiscountVO {
          * 人群标签，特定优惠限定
          */
         private String tagId;
+
+
     }
 
 

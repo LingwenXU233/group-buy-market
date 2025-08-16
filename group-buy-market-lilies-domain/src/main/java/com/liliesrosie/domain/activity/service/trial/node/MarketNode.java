@@ -31,7 +31,7 @@ import java.util.concurrent.*;
 public class MarketNode extends AbstractGroupBuyMarketSupport {
 
     @Resource
-    private EndNode endNode;
+    private TagNode tagNode;
 
     @Resource
     private ErrorNode errorNode;
@@ -101,6 +101,6 @@ public class MarketNode extends AbstractGroupBuyMarketSupport {
         if (null == dynamicContext.getGroupBuyActivityDiscountVO() || null == dynamicContext.getGroupBuyProductVO() || null == dynamicContext.getDeductionPrice()) {
             return errorNode;
         }
-        return endNode;
+        return tagNode;
     }
 }

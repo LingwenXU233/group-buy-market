@@ -34,6 +34,13 @@ public class DefaultActivityStrategyFactory {
         private GroupBuyProductVO groupBuyProductVO;
         // 折扣价格
         private BigDecimal deductionPrice;
+
+        // 活动可见性
+        private Boolean isVisible;
+
+        // 是否参与
+        private Boolean isEnable;
+
     }
 
     private final RootNode rootNode;
