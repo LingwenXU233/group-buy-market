@@ -12,7 +12,8 @@ public abstract class AbstrctMultiThreadStrategyRouter<T, D, R> implements Strat
 
     @Getter
     @Setter
-    protected StrategyHandler<T, D, R> defaultStrategyHandler = StrategyHandler.DEFAULT;
+    @SuppressWarnings("unchecked")
+    protected StrategyHandler<T, D, R> defaultStrategyHandler = (StrategyHandler<T, D, R>) StrategyHandler.DEFAULT;
 
     public R router(T requestParameter, D dynamicContext) throws Exception{
         StrategyHandler<T, D, R> next = this.get(requestParameter, dynamicContext);

@@ -8,10 +8,10 @@ import com.liliesrosie.infrastructure.dao.IGroupBuyActivityDao;
 import com.liliesrosie.infrastructure.dao.IGroupBuyDiscountDao;
 import com.liliesrosie.infrastructure.dao.IGroupBuyProductDao;
 import com.liliesrosie.infrastructure.dao.ISCProductActivityDao;
-import com.liliesrosie.infrastructure.dao.po.GroupBuyActivity;
-import com.liliesrosie.infrastructure.dao.po.GroupBuyDiscount;
-import com.liliesrosie.infrastructure.dao.po.GroupBuyProduct;
-import com.liliesrosie.infrastructure.dao.po.SCProductActivity;
+import com.liliesrosie.infrastructure.dao.po.*;
+import com.liliesrosie.infrastructure.redis.RedissonService;
+import org.redisson.api.RBitSet;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -34,6 +34,9 @@ public class ActivityRepository implements IActivityRepository {
 
     @Resource
     private ISCProductActivityDao scProductActivityDao;
+
+    @Resource
+    private RedissonService redissonService;
 
     public SCProductActivityVO querySCProductActivityBySCGoodsId(String source, String channel, String goodsId){
         SCProductActivity scProductActivityReq = new SCProductActivity();
@@ -96,5 +99,14 @@ public class ActivityRepository implements IActivityRepository {
                 .goodsName(sku.getGoodsName())
                 .originalPrice(sku.getOriginalPrice())
                 .build();
+    }
+
+    @Override
+    public Boolean isTagCrowdRange(String tagId, String userId) {
+        RBitSet bitSet = redissonService.getBitSet(tagId);
+        if (!bitSet.isExists()) return true;
+
+        // 判断用户是否存在人群中
+        return bitSet.get(redissonService.getIndexFromUserId(userId));
     }
 }

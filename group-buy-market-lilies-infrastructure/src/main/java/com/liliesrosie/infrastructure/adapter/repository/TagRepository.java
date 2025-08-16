@@ -50,7 +50,7 @@ public class TagRepository implements ITagRepository {
                                                 .build();
 
         CrowdTagsJob crowdTagsJobRes = crowdTagsJobDao.queryCrowdTagsJob(crowdTagsJobReq);
-        if (null == crowdTagsJobRes) return null;
+        if (crowdTagsJobRes == null) return null;
 
         return CrowdTagsJobEntity.builder()
                 .tagType(crowdTagsJobRes.getTagType())
