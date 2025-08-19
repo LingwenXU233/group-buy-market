@@ -1,0 +1,55 @@
+package com.liliesrosie.test.trigger;
+
+import com.alibaba.fastjson.JSON;
+import com.liliesrosie.api.IDCCService;
+import com.liliesrosie.domain.activity.model.entity.MarketProductEntity;
+import com.liliesrosie.domain.activity.model.entity.TrialBalanceEntity;
+import com.liliesrosie.domain.activity.service.IIndexGroupBuyMarketService;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import javax.annotation.Resource;
+
+/**
+ * @author lingwenxu
+ * @description
+ * @create 2025-08-19 12:12
+ */
+@Slf4j
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class DCCControllerTest {
+    @Resource
+    private IDCCService dccService;
+
+    @Resource
+    private IIndexGroupBuyMarketService indexGroupBuyMarketService;
+
+    @Test
+    public void test_updateConfig() {
+        // 动态调整配置
+        dccService.updateConfig("downgradeSwitch", "1");
+    }
+
+    @Test
+    public void test_updateConfig2indexMarketTrial() throws Exception {
+        // 动态调整配置
+        dccService.updateConfig("downgradeSwitch", "0"); // set to "0" to test whiteList
+        // 超时等待异步
+        Thread.sleep(1000);
+
+        // 营销验证
+        MarketProductEntity marketProductEntity = new MarketProductEntity();
+        marketProductEntity.setUserId("xiaofuge");
+        marketProductEntity.setSource("s01");
+        marketProductEntity.setChannel("c01");
+        marketProductEntity.setGoodsId("9890001");
+
+        TrialBalanceEntity trialBalanceEntity = indexGroupBuyMarketService.indexMarketTrial(marketProductEntity);
+        log.info("请求参数:{}", JSON.toJSONString(marketProductEntity));
+        log.info("返回结果:{}", JSON.toJSONString(trialBalanceEntity));
+    }
+}
