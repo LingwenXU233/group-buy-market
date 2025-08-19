@@ -37,7 +37,7 @@ public class DCCControllerTest {
     @Test
     public void test_updateConfig2indexMarketTrial() throws Exception {
         // 动态调整配置
-        dccService.updateConfig("downgradeSwitch", "1");
+        dccService.updateConfig("downgradeSwitch", "0"); // set to "0" to test whiteList
         // 超时等待异步
         Thread.sleep(1000);
 

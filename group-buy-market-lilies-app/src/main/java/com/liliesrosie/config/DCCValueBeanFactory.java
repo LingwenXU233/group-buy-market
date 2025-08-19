@@ -17,8 +17,10 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.lang.model.element.NestingKind;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringJoiner;
 
 /**
  * @author lingwenxu
@@ -69,7 +71,7 @@ public class DCCValueBeanFactory implements BeanPostProcessor {
                 throw new RuntimeException(field.getName() + " @DCCValue is not config value config case 「isSwitch/isSwitch:1」");
             }
             String[] splits = value.split(":");
-            String key = BASE_CONFIG_PATH.concat(splits[0]);
+            String key = BASE_CONFIG_PATH.concat(splits[0]); // key = group_buy_market_dcc_cutRange
             String defaultValue = splits.length == 2 ? splits[1] : null;
 
             // 设置值
@@ -116,12 +118,12 @@ public class DCCValueBeanFactory implements BeanPostProcessor {
 
         topic.addListener(String.class, (charSequence, s)->{
 
-            String[] split = s.split(Constants.SPLIT);
+            String[] split = s.split(Constants.SPLIT, 2);
 
             // 获取值
             String attribute = split[0];
             String key = BASE_CONFIG_PATH + attribute;
-            String value = split[1];
+            String value  = split[1];
 
             // 设置值
             RBucket<String> bucket = redissonClient.getBucket(key);

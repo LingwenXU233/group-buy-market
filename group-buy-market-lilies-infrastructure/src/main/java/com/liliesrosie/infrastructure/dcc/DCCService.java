@@ -2,7 +2,12 @@ package com.liliesrosie.infrastructure.dcc;
 
 
 import com.liliesrosie.types.annotations.DCCValue;
+import com.liliesrosie.types.common.Constants;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author lingwenxu
@@ -20,6 +25,9 @@ public class DCCService {
 
     @DCCValue("cutRange:100")
     private String cutRange;
+
+    @DCCValue("whiteList:1")
+    private String whiteList;
 
     public boolean isDowngradeSwitch() {
         return "1".equals(downgradeSwitch);
@@ -39,5 +47,13 @@ public class DCCService {
         }
 
         return false;
+    }
+
+    private List<String> getWhiteList(){
+        return Arrays.asList(whiteList.split(Constants.SPLIT));
+    }
+
+    public boolean isInWhiteList(String tagId){
+        return this.getWhiteList().contains(tagId);
     }
 }

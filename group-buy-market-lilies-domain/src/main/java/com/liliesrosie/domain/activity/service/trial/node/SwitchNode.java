@@ -38,9 +38,15 @@ public class SwitchNode extends AbstractGroupBuyMarketSupport {
             throw new AppException(ResponseCode.E003.getCode(), ResponseCode.E003.getInfo());
         }
 
-        if(repository.cutRange(userId)){
+        if(!repository.cutRange(userId)){
             log.info("拼团活动用户切量 {}", userId);
             throw new AppException(ResponseCode.E004.getCode(), ResponseCode.E004.getInfo());
+        }
+
+        // 判断白名单
+        if(!repository.whiteList("2")){
+            log.info("拼团白名单拦截 {}", userId);
+            throw new AppException(ResponseCode.E005.getCode(), ResponseCode.E005.getInfo());
         }
 
         return router(requestParameter, dynamicContext);
@@ -49,8 +55,6 @@ public class SwitchNode extends AbstractGroupBuyMarketSupport {
     @Override
     public StrategyHandler<MarketProductEntity, DefaultActivityStrategyFactory.DynamicContext, TrialBalanceEntity> get(MarketProductEntity requestParameter, DefaultActivityStrategyFactory.DynamicContext dynamicContext) throws Exception {
 
-        // 不满足情况下
-        // 满足条件的情况下
         return marketNode;
     }
 }

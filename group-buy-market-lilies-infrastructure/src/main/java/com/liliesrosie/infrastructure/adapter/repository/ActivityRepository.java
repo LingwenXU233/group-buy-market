@@ -123,4 +123,9 @@ public class ActivityRepository implements IActivityRepository {
     public Boolean cutRange(String userId) {
         return dccService.isCutRange(userId);
     }
+
+    @Override
+    public Boolean whiteList(String tagId) {
+        return dccService.isInWhiteList(tagId);
+    }
 }

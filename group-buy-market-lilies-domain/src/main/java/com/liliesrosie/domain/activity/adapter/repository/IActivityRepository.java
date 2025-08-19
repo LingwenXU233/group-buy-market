@@ -24,4 +24,6 @@ public interface IActivityRepository {
 
     Boolean cutRange(String userId);
 
+    Boolean whiteList(String tagId);
+
 }

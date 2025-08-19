@@ -17,6 +17,7 @@ public enum ResponseCode {
 
     E003("E003", "拼团活动降级拦截"),
     E004("E004", "拼团活动切量拦截"),
+    E005("E005", "拼团白名单拦截"),
     ;
 
     private String code;
