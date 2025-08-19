@@ -9,6 +9,7 @@ import com.liliesrosie.infrastructure.dao.IGroupBuyDiscountDao;
 import com.liliesrosie.infrastructure.dao.IGroupBuyProductDao;
 import com.liliesrosie.infrastructure.dao.ISCProductActivityDao;
 import com.liliesrosie.infrastructure.dao.po.*;
+import com.liliesrosie.infrastructure.dcc.DCCService;
 import com.liliesrosie.infrastructure.redis.RedissonService;
 import org.redisson.api.RBitSet;
 import org.springframework.dao.DuplicateKeyException;
@@ -37,6 +38,9 @@ public class ActivityRepository implements IActivityRepository {
 
     @Resource
     private RedissonService redissonService;
+
+    @Resource
+    private DCCService dccService;
 
     public SCProductActivityVO querySCProductActivityBySCGoodsId(String source, String channel, String goodsId){
         SCProductActivity scProductActivityReq = new SCProductActivity();
@@ -106,7 +110,17 @@ public class ActivityRepository implements IActivityRepository {
         RBitSet bitSet = redissonService.getBitSet(tagId);
         if (!bitSet.isExists()) return true;
 
-        // 判断用户是否存在人群中
+        // 判断用户是否存在人群中，这个是RBitSet内置方法
         return bitSet.get(redissonService.getIndexFromUserId(userId));
+    }
+
+    @Override
+    public Boolean downgradeSwitch() {
+        return dccService.isDowngradeSwitch();
+    }
+
+    @Override
+    public Boolean cutRange(String userId) {
+        return dccService.isCutRange(userId);
     }
 }

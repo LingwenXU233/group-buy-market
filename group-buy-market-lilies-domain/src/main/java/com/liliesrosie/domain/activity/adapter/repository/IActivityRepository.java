@@ -20,4 +20,8 @@ public interface IActivityRepository {
 
     Boolean isTagCrowdRange(String tagId, String userId);
 
+    Boolean downgradeSwitch();
+
+    Boolean cutRange(String userId);
+
 }

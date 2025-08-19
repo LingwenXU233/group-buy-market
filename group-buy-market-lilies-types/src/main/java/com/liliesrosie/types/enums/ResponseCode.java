@@ -14,6 +14,9 @@ public enum ResponseCode {
     ILLEGAL_PARAMETER("0002", "非法参数"),
     E0001("E0001", "不存在对应的折扣计算服务"),
     E0002("E0002", "无拼团营销配置"),
+
+    E003("E003", "拼团活动降级拦截"),
+    E004("E004", "拼团活动切量拦截"),
     ;
 
     private String code;
