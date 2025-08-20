@@ -44,10 +44,10 @@ public class SwitchNode extends AbstractGroupBuyMarketSupport {
         }
 
         // 判断白名单
-        if(!repository.whiteList("2")){
-            log.info("拼团白名单拦截 {}", userId);
-            throw new AppException(ResponseCode.E005.getCode(), ResponseCode.E005.getInfo());
-        }
+//        if(!repository.whiteList("2")){
+//            log.info("拼团白名单拦截 {}", userId);
+//            throw new AppException(ResponseCode.E005.getCode(), ResponseCode.E005.getInfo());
+//        }
 
         return router(requestParameter, dynamicContext);
     }
