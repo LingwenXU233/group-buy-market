@@ -1,5 +1,6 @@
 package com.liliesrosie.domain.activity.model.entity;
 
+import com.liliesrosie.domain.activity.model.valobj.GroupBuyActivityDiscountVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,5 +46,8 @@ public class TrialBalanceEntity {
 
     /** is this user able to join the group-buy activity */
     private Boolean isEnable;
+
+    /** 活动配置信息 */
+    private GroupBuyActivityDiscountVO groupBuyActivityDiscountVO;
 
 }
