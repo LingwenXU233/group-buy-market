@@ -5,7 +5,7 @@ package com.liliesrosie.types.design.framework.link.model1;
  * @description
  * @create 2025-08-21 16:07
  */
-public abstract class AbstractLoginLink<T, D, R> implements ILogicHandler<T, D, R> {
+public abstract class AbstractLogicNode<T, D, R> implements ILogicHandler<T, D, R> {
 
     private ILogicHandler<T, D, R> next;
 

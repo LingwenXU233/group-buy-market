@@ -1,7 +1,7 @@
 package com.liliesrosie.test.rule01.logic;
 
 import com.liliesrosie.test.rule01.factory.Rule01TradeRuleFactory;
-import com.liliesrosie.types.design.framework.link.model1.AbstractLoginLink;
+import com.liliesrosie.types.design.framework.link.model1.AbstractLogicNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
  * @create 2025-08-21 16:13
  */
 @Slf4j
-@Service
-public class RuleLogic101 extends AbstractLoginLink<String, Rule01TradeRuleFactory.DynamicContext,String> {
+@Service("RuleNode101")
+public class RuleNode101 extends AbstractLogicNode<String, Rule01TradeRuleFactory.DynamicContext,String> {
 
     @Override
     public String apply(String requestParam, Rule01TradeRuleFactory.DynamicContext dynamicContext) throws Exception {

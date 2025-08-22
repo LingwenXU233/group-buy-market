@@ -1,13 +1,14 @@
 package com.liliesrosie.test.rule01.factory;
 
-import com.liliesrosie.test.rule01.logic.RuleLogic101;
-import com.liliesrosie.test.rule01.logic.RuleLogic202;
+import com.liliesrosie.test.rule01.logic.RuleNode101;
+import com.liliesrosie.test.rule01.logic.RuleNode102;
 import com.liliesrosie.types.design.framework.link.model1.ILogicHandler;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -21,10 +22,12 @@ import javax.annotation.Resource;
 @Service
 public class Rule01TradeRuleFactory {
     @Resource
-    RuleLogic101 ruleLogic101;
+    @Qualifier("RuleNode101")
+    RuleNode101 ruleNode101;
 
     @Resource
-    RuleLogic202 ruleLogic202;
+    @Qualifier("RuleNode102")
+    RuleNode102 ruleNode102;
 
 
     /**
@@ -33,8 +36,8 @@ public class Rule01TradeRuleFactory {
      */
     public ILogicHandler<String, DynamicContext, String> openLogicLink(){
         log.info("装配规则链");
-        ruleLogic101.appendNext(ruleLogic202);
-        return ruleLogic101;
+        ruleNode101.appendNext(ruleNode102);
+        return ruleNode101;
     }
 
     @Data

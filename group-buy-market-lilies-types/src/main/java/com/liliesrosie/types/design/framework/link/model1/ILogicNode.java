@@ -5,7 +5,7 @@ package com.liliesrosie.types.design.framework.link.model1;
  * @description 责任链节点的基本行为接口。
  * @create 2025-08-21 16:05
  */
-public interface IChainNode<T, D, R> {
+public interface ILogicNode<T, D, R> {
     /**
      * 获取下一个节点
      */
