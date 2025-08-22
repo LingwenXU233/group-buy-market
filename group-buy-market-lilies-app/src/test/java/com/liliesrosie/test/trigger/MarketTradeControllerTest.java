@@ -46,6 +46,24 @@ public class MarketTradeControllerTest {
     }
 
     @Test
+    public void test_lockMarketPayOrder_exceedUserTakenCount(){
+
+        LockMarketPayOrderRequestDTO lockMarketPayOrderRequestDTO = new LockMarketPayOrderRequestDTO();
+        lockMarketPayOrderRequestDTO.setUserId("xiaofuge");
+        lockMarketPayOrderRequestDTO.setTeamId(null);
+        lockMarketPayOrderRequestDTO.setActivityId(100124L);
+        lockMarketPayOrderRequestDTO.setSource("s01");
+        lockMarketPayOrderRequestDTO.setChannel("c01");
+        lockMarketPayOrderRequestDTO.setGoodsId("9890001");
+        lockMarketPayOrderRequestDTO.setOutTradeNo(RandomStringUtils.randomNumeric(12));
+
+        Response<LockMarketPayOrderResponseDTO> lockMarketPayOrderResponse = marketTradeService.lockMarketPayOrder(lockMarketPayOrderRequestDTO);
+        log.info("请求参数:{}", JSON.toJSONString(lockMarketPayOrderRequestDTO));
+        log.info("返回结果:{}", JSON.toJSONString(lockMarketPayOrderResponse));
+
+    }
+
+    @Test
     public void test_lockMarketPayOrder_teamId_not_null() {
         LockMarketPayOrderRequestDTO lockMarketPayOrderRequestDTO = new LockMarketPayOrderRequestDTO();
         lockMarketPayOrderRequestDTO.setUserId("xiaofuge");

@@ -34,4 +34,6 @@ public class GroupBuyOrderList {
     private String outTradeNo;
     private Date createTime;
     private Date updateTime;
+    /** 唯一业务ID */
+    private String bizId;
 }

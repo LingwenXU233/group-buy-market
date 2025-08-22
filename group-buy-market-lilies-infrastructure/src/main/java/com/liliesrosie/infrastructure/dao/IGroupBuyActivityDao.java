@@ -15,4 +15,7 @@ public interface IGroupBuyActivityDao {
     GroupBuyActivity queryValidGroupBuyActivity(GroupBuyActivity groupBuyActivityReq);
 
     GroupBuyActivity queryValidGroupBuyActivityById(Long activityId);
+
+    GroupBuyActivity queryGroupBuyActivityByActivityId(Long activityId);
+
 }

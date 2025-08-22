@@ -20,5 +20,5 @@ public interface ITradeOrderService {
     GroupBuyProgressVO queryGroupBuyProgress(String teamId);
 
     // 锁单操作
-    MarketPayOrderEntity lockMarketPayOrder(UserEntity userEntity, PayActivityEntity payActivityEntity, PayDiscountEntity payDiscountEntity);
+    MarketPayOrderEntity lockMarketPayOrder(UserEntity userEntity, PayActivityEntity payActivityEntity, PayDiscountEntity payDiscountEntity) throws Exception;
 }
