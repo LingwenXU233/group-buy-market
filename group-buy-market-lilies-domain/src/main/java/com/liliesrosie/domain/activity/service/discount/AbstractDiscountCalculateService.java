@@ -1,9 +1,11 @@
 package com.liliesrosie.domain.activity.service.discount;
 
+import com.liliesrosie.domain.activity.adapter.repository.IActivityRepository;
 import com.liliesrosie.domain.activity.model.valobj.DiscountTypeEnum;
 import com.liliesrosie.domain.activity.model.valobj.GroupBuyActivityDiscountVO;
 import com.liliesrosie.domain.activity.service.discount.IDiscountCalculationService;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 
 /**
@@ -13,6 +15,8 @@ import java.math.BigDecimal;
  */
 public abstract class AbstractDiscountCalculateService implements IDiscountCalculationService {
 
+    @Resource
+    protected IActivityRepository repository;
     @Override
     public BigDecimal calculate(String userId, BigDecimal originalPrice, GroupBuyActivityDiscountVO.GroupBuyDiscount groupBuyDiscount) {
 
@@ -27,9 +31,9 @@ public abstract class AbstractDiscountCalculateService implements IDiscountCalcu
 
     // 人群过滤 - 限定人群优惠
     private boolean filterTagId(String userId, String tagId) {
-        // todo 后续开发这部分
-        return true;
+        return repository.isTagCrowdRange(tagId, userId);
     }
+
     protected abstract BigDecimal doCalculate(BigDecimal originalPrice, GroupBuyActivityDiscountVO.GroupBuyDiscount groupBuyDiscount);
 
 }

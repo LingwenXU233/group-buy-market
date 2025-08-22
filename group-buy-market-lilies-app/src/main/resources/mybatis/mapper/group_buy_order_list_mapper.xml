@@ -19,6 +19,7 @@
         <result column="out_trade_no" property="outTradeNo"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
+        <result column="biz_id" property="bizId"/>
     </resultMap>
 
     <insert id="insert" parameterType="com.liliesrosie.infrastructure.dao.po.GroupBuyOrderList">
@@ -39,6 +40,12 @@
         end_time, goods_id, source, channel, original_price, deduction_price, status
         from group_buy_order_list
         where out_trade_no = #{outTradeNo} and user_id = #{userId} and status = 0
+    </select>
+
+    <select id="queryOrderCountByActivityId" parameterType="com.liliesrosie.infrastructure.dao.po.GroupBuyOrderList" resultType="java.lang.Integer">
+        select COUNT(*)
+        from group_buy_order_list
+        where user_id = #{userId} and activity_id = #{activity_id}
     </select>
 
 

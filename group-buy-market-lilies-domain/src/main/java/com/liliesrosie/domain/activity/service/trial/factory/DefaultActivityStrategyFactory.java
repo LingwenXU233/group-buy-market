@@ -35,11 +35,15 @@ public class DefaultActivityStrategyFactory {
         // 折扣价格
         private BigDecimal deductionPrice;
 
+        // 折扣价格
+        private BigDecimal payPrice;
+
         // 活动可见性
         private Boolean isVisible;
 
         // 是否参与
         private Boolean isEnable;
+
 
     }
 
