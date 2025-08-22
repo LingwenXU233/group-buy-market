@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
  * @create 2025-08-21 18:01
  */
 @Slf4j
-@Service("RuleLogic201")
-public class RuleLogic201 implements ILogicHandler<String, Rule02TradeRuleFactory.DynamicContext, String > {
+@Service("RuleNode201")
+public class RuleNode201 implements ILogicHandler<String, Rule02TradeRuleFactory.DynamicContext, XxxResponse > {
 
     @Override
-    public String apply(String requestParam, Rule02TradeRuleFactory.DynamicContext dynamicContext) throws Exception {
+    public XxxResponse apply(String requestParam, Rule02TradeRuleFactory.DynamicContext dynamicContext) throws Exception {
         log.info("link model02 RuleLogic101");
         return null;
     }

@@ -7,7 +7,7 @@ import java.util.LinkedList;
  * @description
  * @create 2025-08-21 17:48
  */
-public class BusinessLinkedList<T, D, R> extends LinkedList<ILogicHandler<T, D, R>> implements ILogicHandler<T, D, R>{
+public class BusinessLinkedList<T, D, R> extends LinkedList<ILogicHandler<T, D, R>> {
 
     private final String name;
 
@@ -15,10 +15,10 @@ public class BusinessLinkedList<T, D, R> extends LinkedList<ILogicHandler<T, D, 
         this.name = name;
     }
 
-    @Override
-    public R apply(T requestParam, D dynamicContext) throws Exception {
+    public R execute(T requestParam, D dynamicContext) throws Exception {
         for (ILogicHandler<T, D, R> handler : this) {
-            handler.apply(requestParam, dynamicContext);
+            R applyResult = handler.apply(requestParam, dynamicContext);
+            if (null != applyResult) return applyResult;
         }
         return null;
     }
