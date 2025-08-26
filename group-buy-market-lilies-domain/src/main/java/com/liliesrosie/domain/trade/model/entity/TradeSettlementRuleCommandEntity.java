@@ -10,13 +10,13 @@ import java.util.Date;
 /**
  * @author lingwenxu
  * @description
- * @create 2025-08-25 14:49
+ * @create 2025-08-26 10:48
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TradePaySuccessEntity {
+public class TradeSettlementRuleCommandEntity {
     /** 渠道 */
     private String source;
     /** 来源 */
@@ -25,7 +25,6 @@ public class TradePaySuccessEntity {
     private String userId;
     /** 外部交易单号 */
     private String outTradeNo;
-
     /** 外部交易时间 */
     private Date outTradeTime;
 }

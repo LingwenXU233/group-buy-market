@@ -17,6 +17,7 @@
         <result column="deduction_price" property="deductionPrice"/>
         <result column="status" property="status"/>
         <result column="out_trade_no" property="outTradeNo"/>
+        <result column="out_trade_time" property="outTradeTime"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
         <result column="biz_id" property="bizId"/>

@@ -16,6 +16,7 @@ import com.liliesrosie.infrastructure.dao.po.GroupBuyActivity;
 import com.liliesrosie.infrastructure.dao.po.GroupBuyOrder;
 import com.liliesrosie.infrastructure.dao.po.GroupBuyOrderList;
 import com.liliesrosie.infrastructure.dao.po.NotifyTask;
+import com.liliesrosie.infrastructure.dcc.DCCService;
 import com.liliesrosie.types.common.Constants;
 import com.liliesrosie.types.enums.ActivityStatusEnumVO;
 import com.liliesrosie.types.enums.ResponseCode;
@@ -27,6 +28,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,6 +52,11 @@ public class TradeRepository implements ITradeRepository {
 
     @Resource
     INotifyTaskDao notifyTaskDao;
+
+    @Resource
+    DCCService dccService;
+
+
 
     @Override
     public MarketPayOrderEntity queryNoPayMarketPayOrderByOutTradeNo(String userId, String outTradeNo) {
@@ -99,6 +107,12 @@ public class TradeRepository implements ITradeRepository {
             // 使用 RandomStringUtils.randomNumeric 替代公司里使用的雪花算法UUID
             teamId = RandomStringUtils.randomNumeric(8);
 
+            // 日期处理
+            Date currentDate = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(currentDate);
+            calendar.add(Calendar.MINUTE, payActivityEntity.getValidTime());
+
             // 创建GroupBuyOrder表单
             GroupBuyOrder groupBuyOrder = GroupBuyOrder.builder()
                     .teamId(teamId)
@@ -111,6 +125,8 @@ public class TradeRepository implements ITradeRepository {
                     .targetCount(payActivityEntity.getTargetCount())
                     .completeCount(0)
                     .lockCount(1)
+                    .validStartTime(currentDate)
+                    .validEndTime(calendar.getTime())
                     .build();
             // 写入记录
             groupBuyOrderDao.insert(groupBuyOrder);
@@ -211,8 +227,11 @@ public class TradeRepository implements ITradeRepository {
                 .completeCount(groupBuyOrder.getCompleteCount())
                 .lockCount(groupBuyOrder.getLockCount())
                 .targetCount(groupBuyOrder.getTargetCount())
+                .validEndTime(groupBuyOrder.getValidEndTime())
+                .validStartTime(groupBuyOrder.getValidStartTime())
                 .build();
     }
+
 
     @Transactional(timeout = 500)
     @Override
@@ -266,5 +285,10 @@ public class TradeRepository implements ITradeRepository {
             }
 
         }
+    }
+
+    @Override
+    public boolean isSCBlackIntercept(String source, String channel) {
+        return dccService.isSCBlackIntercept(source, channel);
     }
 }

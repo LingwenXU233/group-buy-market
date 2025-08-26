@@ -29,6 +29,9 @@ public class DCCService {
     @DCCValue("whiteList:1")
     private String whiteList;
 
+    @DCCValue("scBlacklist:s02c02")
+    private String scBlacklist;
+
     public boolean isDowngradeSwitch() {
         return "1".equals(downgradeSwitch);
     }
@@ -55,5 +58,10 @@ public class DCCService {
 
     public boolean isInWhiteList(String tagId){
         return this.getWhiteList().contains(tagId);
+    }
+
+    public boolean isSCBlackIntercept(String source, String channel){
+        List<String> list = Arrays.asList(scBlacklist.split(Constants.SPLIT));
+        return list.contains(source + channel);
     }
 }

@@ -32,6 +32,8 @@ public class GroupBuyOrderList {
     private BigDecimal deductionPrice;
     private Integer status;
     private String outTradeNo;
+    /** 外部交易时间 */
+    private Date outTradeTime;
     private Date createTime;
     private Date updateTime;
     /** 唯一业务ID */

@@ -5,7 +5,7 @@ import com.liliesrosie.domain.trade.model.aggregate.GroupBuyOrderAggregate;
 import com.liliesrosie.domain.trade.model.entity.*;
 import com.liliesrosie.domain.trade.model.valobj.GroupBuyProgressVO;
 import com.liliesrosie.domain.trade.service.ITradeLockOrderService;
-import com.liliesrosie.domain.trade.service.lock.factory.TradeRuleFilterFactory;
+import com.liliesrosie.domain.trade.service.lock.factory.TradeLockRuleFilterFactory;
 import com.liliesrosie.types.design.framework.link.model2.BusinessLinkedList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,8 +26,8 @@ public class TradeLockOrderService implements ITradeLockOrderService {
     private ITradeRepository repository;
 
     @Resource
-    @Qualifier(("tradeRuleFilterChain"))
-    BusinessLinkedList<TradeRuleCommandEntity, TradeRuleFilterFactory.DynamicContext, TradeRuleFilterBackEntity> tradeRuleFilterChain;
+    @Qualifier(("tradeLockRuleFilterChain"))
+    BusinessLinkedList<TradeLockRuleCommandEntity, TradeLockRuleFilterFactory.DynamicContext, TradeLockRuleFilterBackEntity> tradeRuleFilterChain;
 
     @Override
     public MarketPayOrderEntity queryNoPayMarketPayOrderByOutTradeNo(String userId, String outTradeNo) {
@@ -46,11 +46,11 @@ public class TradeLockOrderService implements ITradeLockOrderService {
         log.info("拼团交易-锁定营销优惠支付订单:{} activityId:{} goodsId:{}", userEntity.getUserId(), payActivityEntity.getActivityId(), payDiscountEntity.getGoodsId());
 
         // 交易规则过滤
-        TradeRuleFilterBackEntity tradeRuleFilterBackEntity = tradeRuleFilterChain.execute(TradeRuleCommandEntity.builder()
+        TradeLockRuleFilterBackEntity tradeRuleFilterBackEntity = tradeRuleFilterChain.execute(TradeLockRuleCommandEntity.builder()
                         .activityId(payActivityEntity.getActivityId())
                         .userId(userEntity.getUserId())
                         .build(),
-                new TradeRuleFilterFactory.DynamicContext());
+                new TradeLockRuleFilterFactory.DynamicContext());
 
         // 已参与拼团量 - 用于构建数据库唯一索引使用，确保用户只能在一个活动上参与固定的次数
         Integer userTakeOrderCount = tradeRuleFilterBackEntity.getUserTakeOrderCount();

@@ -3,9 +3,9 @@ package com.liliesrosie.domain.trade.service.lock.filter;
 
 import com.liliesrosie.domain.trade.adaptor.repository.ITradeRepository;
 import com.liliesrosie.domain.trade.model.entity.GroupBuyActivityEntity;
-import com.liliesrosie.domain.trade.model.entity.TradeRuleCommandEntity;
-import com.liliesrosie.domain.trade.model.entity.TradeRuleFilterBackEntity;
-import com.liliesrosie.domain.trade.service.lock.factory.TradeRuleFilterFactory;
+import com.liliesrosie.domain.trade.model.entity.TradeLockRuleCommandEntity;
+import com.liliesrosie.domain.trade.model.entity.TradeLockRuleFilterBackEntity;
+import com.liliesrosie.domain.trade.service.lock.factory.TradeLockRuleFilterFactory;
 import com.liliesrosie.types.design.framework.link.model2.ILogicHandler;
 import com.liliesrosie.types.enums.ActivityStatusEnumVO;
 import com.liliesrosie.types.enums.ResponseCode;
@@ -23,13 +23,13 @@ import java.util.Date;
  */
 @Slf4j
 @Service
-public class ActivityUsibilityRuleFilter implements ILogicHandler<TradeRuleCommandEntity, TradeRuleFilterFactory.DynamicContext, TradeRuleFilterBackEntity> {
+public class ActivityUsibilityRuleFilter implements ILogicHandler<TradeLockRuleCommandEntity, TradeLockRuleFilterFactory.DynamicContext, TradeLockRuleFilterBackEntity> {
 
     @Resource
     private ITradeRepository repository;
 
     @Override
-    public TradeRuleFilterBackEntity apply(TradeRuleCommandEntity requestParam, TradeRuleFilterFactory.DynamicContext dynamicContext) throws Exception {
+    public TradeLockRuleFilterBackEntity apply(TradeLockRuleCommandEntity requestParam, TradeLockRuleFilterFactory.DynamicContext dynamicContext) throws Exception {
         log.info("交易规则过滤-活动的可用性校验{} activityId:{}", requestParam.getUserId(), requestParam.getActivityId());
 
         GroupBuyActivityEntity groupBuyActivity = repository.queryGroupBuyActivityEntityByActivityId(requestParam.getActivityId());

@@ -17,15 +17,17 @@
         <result column="status" property="status"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
+        <result column="valid_start_time" property="validStartTime"/>
+        <result column="valid_end_time" property="validEndTime"/>
     </resultMap>
 
     <insert id="insert" parameterType="com.liliesrosie.infrastructure.dao.po.GroupBuyOrder">
         insert into group_buy_order(team_id, activity_id, source, channel,
         original_price, deduction_price, pay_price,
         target_count, complete_count, lock_count, status,
-        create_time, update_time)
+        create_time, update_time, valid_start_time, valid_end_time)
         values ( #{teamId}, #{activityId}, #{source}, #{channel}, #{originalPrice},
-        #{deductionPrice}, #{payPrice}, #{targetCount}, #{completeCount}, #{lockCount}, 0, now(), now())
+        #{deductionPrice}, #{payPrice}, #{targetCount}, #{completeCount}, #{lockCount}, 0, now(), now(), #{validStartTime}, #{validEndTime})
     </insert>
 
     <select id="queryGroupBuyProgress" parameterType="java.lang.String" resultMap="dataMap">
@@ -52,7 +54,8 @@
 
     <select id="queryGroupBuyTeamByTeamId" parameterType="java.lang.String" resultMap="dataMap">
         select activity_id, team_id, status,
-        complete_count, lock_count, target_count
+        complete_count, lock_count, target_count,
+        valid_start_time, valid_end_time
         from group_buy_order
         where team_id = #{teamId}
     </select>
