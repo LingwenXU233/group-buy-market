@@ -11,7 +11,7 @@ import com.liliesrosie.domain.trade.model.valobj.GroupBuyProgressVO;
  * @description
  * @create 2025-08-20 14:18
  */
-public interface ITradeOrderService {
+public interface ITradeLockOrderService {
 
     // 查询有没有 参与拼团，未支付的相关订单
     MarketPayOrderEntity queryNoPayMarketPayOrderByOutTradeNo(String userId, String outTradeNo);

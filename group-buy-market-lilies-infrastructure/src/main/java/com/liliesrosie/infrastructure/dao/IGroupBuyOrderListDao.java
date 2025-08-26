@@ -4,6 +4,8 @@ import com.liliesrosie.infrastructure.dao.po.GroupBuyOrder;
 import com.liliesrosie.infrastructure.dao.po.GroupBuyOrderList;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @author lingwenxu
  * @description
@@ -17,5 +19,10 @@ public interface IGroupBuyOrderListDao {
     GroupBuyOrderList queryGroupBuyOrderRecordByOutTradeNo(GroupBuyOrderList groupBuyOrderListReq);
 
     int queryOrderCountByActivityId(GroupBuyOrderList groupBuyOrderListReq);
+
+    int updateOrderStatus2COMPLETE(GroupBuyOrderList groupBuyOrderListReq);
+
+    List<String> queryGroupBuyCompleteOrderOutTradeNoListByTeamId(String teamId);
+
 
 }

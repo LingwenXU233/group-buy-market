@@ -1,7 +1,9 @@
 package com.liliesrosie.domain.trade.adaptor.repository;
 
 import com.liliesrosie.domain.trade.model.aggregate.GroupBuyOrderAggregate;
+import com.liliesrosie.domain.trade.model.aggregate.GroupBuyTeamSettlementAggregate;
 import com.liliesrosie.domain.trade.model.entity.GroupBuyActivityEntity;
+import com.liliesrosie.domain.trade.model.entity.GroupBuyTeamEntity;
 import com.liliesrosie.domain.trade.model.entity.MarketPayOrderEntity;
 import com.liliesrosie.domain.trade.model.valobj.GroupBuyProgressVO;
 
@@ -21,4 +23,10 @@ public interface ITradeRepository {
     GroupBuyActivityEntity queryGroupBuyActivityEntityByActivityId(Long activityId);
 
     int queryOrderCountByActivityId(String userId, Long activityId);
+
+    MarketPayOrderEntity queryMarketPayOrderEntityByOutTradeNo(String userId, String outTradeNo);
+
+    GroupBuyTeamEntity queryGroupBuyTeamByTeamId(String teamId);
+
+    void settlementMarketPayOrder(GroupBuyTeamSettlementAggregate groupBuyTeamSettlementAggregate);
 }

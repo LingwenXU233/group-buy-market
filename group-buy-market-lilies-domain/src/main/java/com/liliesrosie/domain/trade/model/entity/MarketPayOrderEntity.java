@@ -19,9 +19,13 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class MarketPayOrderEntity {
 
+    /** 拼单组队ID */
+    private String teamId;
+
     private String orderId;
 
     private BigDecimal deductPrices;
 
     private TradeOrderStatusEnumVO tradeOrderStatusEnumVO;
+
 }
