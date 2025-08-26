@@ -14,7 +14,7 @@ import com.liliesrosie.domain.trade.model.entity.PayActivityEntity;
 import com.liliesrosie.domain.trade.model.entity.PayDiscountEntity;
 import com.liliesrosie.domain.trade.model.entity.UserEntity;
 import com.liliesrosie.domain.trade.model.valobj.GroupBuyProgressVO;
-import com.liliesrosie.domain.trade.service.ITradeOrderService;
+import com.liliesrosie.domain.trade.service.ITradeLockOrderService;
 import com.liliesrosie.types.enums.ResponseCode;
 import com.liliesrosie.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +41,7 @@ public class MarketTradeController implements IMarketTradeService {
     private IIndexGroupBuyMarketService indexGroupBuyMarketService;
 
     @Resource
-    private ITradeOrderService tradeOrderService;
+    private ITradeLockOrderService tradeOrderService;
 
     @Override
     public Response<LockMarketPayOrderResponseDTO> lockMarketPayOrder(LockMarketPayOrderRequestDTO lockMarketPayOrderRequestDTO) {
