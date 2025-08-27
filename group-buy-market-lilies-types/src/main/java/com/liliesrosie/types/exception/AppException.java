@@ -1,5 +1,6 @@
 package com.liliesrosie.types.exception;
 
+import com.liliesrosie.types.enums.ResponseCode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -33,6 +34,11 @@ public class AppException extends RuntimeException {
         this.code = code;
         this.info = message;
         super.initCause(cause);
+    }
+
+    public AppException(ResponseCode responseCode) {
+        this.code = responseCode.getCode();
+        this.info = responseCode.getInfo();
     }
 
     @Override

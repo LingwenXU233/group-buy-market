@@ -32,4 +32,6 @@ public class GroupBuyOrder {
     private Integer status;
     private Date createTime;
     private Date updateTime;
+    private Date validStartTime;
+    private Date validEndTime;
 }

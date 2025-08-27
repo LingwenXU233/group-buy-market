@@ -11,14 +11,13 @@ import java.util.Date;
 /**
  * @author lingwenxu
  * @description
- * @create 2025-08-25 15:04
+ * @create 2025-08-26 10:48
  */
-
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class GroupBuyTeamEntity {
+@AllArgsConstructor
+public class TradeSettlementRuleFilterBackEntity {
     /** 拼单组队ID */
     private String teamId;
     /** 活动ID */
@@ -31,8 +30,8 @@ public class GroupBuyTeamEntity {
     private Integer lockCount;
     /** 状态（0-拼单中、1-完成、2-失败） */
     private GroupBuyOrderEnumVO status;
-    /** 活动开始时间 */
+    /** 拼团开始时间 - 参与拼团时间 */
     private Date validStartTime;
-    /** 活动结束时间 */
+    /** 拼团结束时间 - 拼团有效时长 */
     private Date validEndTime;
 }

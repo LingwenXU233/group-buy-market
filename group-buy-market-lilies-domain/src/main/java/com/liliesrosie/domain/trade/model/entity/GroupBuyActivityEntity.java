@@ -41,6 +41,7 @@ public class GroupBuyActivityEntity {
     /** 人群标签规则范围 */
     private String tagScope;
 
+
     /** 活动状态（0创建、1生效、2过期、3废弃） */
     private ActivityStatusEnumVO status;
 }
