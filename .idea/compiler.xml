@@ -18,7 +18,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="group-buy-market-lilies" options="-parameters" />
+      <module name="group-buy-market-lilies" options="" />
       <module name="group-buy-market-lilies-api" options="-parameters" />
       <module name="group-buy-market-lilies-app" options="-parameters" />
       <module name="group-buy-market-lilies-domain" options="-parameters" />

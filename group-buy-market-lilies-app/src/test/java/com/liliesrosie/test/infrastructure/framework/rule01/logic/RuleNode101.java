@@ -1,6 +1,6 @@
-package com.liliesrosie.test.rule01.logic;
+package com.liliesrosie.test.infrastructure.framework.rule01.logic;
 
-import com.liliesrosie.test.rule01.factory.Rule01TradeRuleFactory;
+import com.liliesrosie.test.infrastructure.framework.rule01.factory.Rule01TradeRuleFactory;
 import com.liliesrosie.types.design.framework.link.model1.AbstractLogicNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

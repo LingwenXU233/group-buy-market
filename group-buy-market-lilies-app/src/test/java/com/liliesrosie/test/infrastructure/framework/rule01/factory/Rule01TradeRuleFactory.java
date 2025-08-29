@@ -1,7 +1,7 @@
-package com.liliesrosie.test.rule01.factory;
+package com.liliesrosie.test.infrastructure.framework.rule01.factory;
 
-import com.liliesrosie.test.rule01.logic.RuleNode101;
-import com.liliesrosie.test.rule01.logic.RuleNode102;
+import com.liliesrosie.test.infrastructure.framework.rule01.logic.RuleNode101;
+import com.liliesrosie.test.infrastructure.framework.rule01.logic.RuleNode102;
 import com.liliesrosie.types.design.framework.link.model1.ILogicHandler;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,8 +1,8 @@
-package com.liliesrosie.test.rule02.factory;
+package com.liliesrosie.test.infrastructure.framework.rule02.factory;
 
-import com.liliesrosie.test.rule02.logic.RuleNode201;
-import com.liliesrosie.test.rule02.logic.RuleNode202;
-import com.liliesrosie.test.rule02.logic.XxxResponse;
+import com.liliesrosie.test.infrastructure.framework.rule02.logic.XxxResponse;
+import com.liliesrosie.test.infrastructure.framework.rule02.logic.RuleNode201;
+import com.liliesrosie.test.infrastructure.framework.rule02.logic.RuleNode202;
 import com.liliesrosie.types.design.framework.link.model2.BusinessLinkedList;
 import com.liliesrosie.types.design.framework.link.model2.BusinessLinkedListBuilder;
 import lombok.AllArgsConstructor;
@@ -10,11 +10,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * @author lingwenxu
