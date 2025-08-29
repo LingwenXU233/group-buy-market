@@ -49,4 +49,17 @@ public class TradeSettlementOrderServiceTest {
         log.info("请求参数:{}", JSON.toJSONString(tradePaySuccessEntity));
         log.info("测试结果:{}", JSON.toJSONString(tradePaySettlementEntity));
     }
+
+    @Test
+    public void test_settlementMarketPayOrder_feature13() throws Exception {
+        TradePaySuccessEntity tradePaySuccessEntity = new TradePaySuccessEntity();
+        tradePaySuccessEntity.setSource("s01");
+        tradePaySuccessEntity.setChannel("c01");
+        tradePaySuccessEntity.setUserId("xfg08");
+        tradePaySuccessEntity.setOutTradeNo("427444714118");
+        tradePaySuccessEntity.setOutTradeTime(new Date());
+        TradePaySettlementEntity tradePaySettlementEntity = tradeSettlementOrderService.settlementMarketPayOrder(tradePaySuccessEntity);
+        log.info("请求参数:{}", JSON.toJSONString(tradePaySuccessEntity));
+        log.info("测试结果:{}", JSON.toJSONString(tradePaySettlementEntity));
+    }
 }

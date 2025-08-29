@@ -1,7 +1,7 @@
-package com.liliesrosie.test.rule01;
+package com.liliesrosie.test.infrastructure.framework.rule01;
 
 import com.alibaba.fastjson.JSON;
-import com.liliesrosie.test.rule01.factory.Rule01TradeRuleFactory;
+import com.liliesrosie.test.infrastructure.framework.rule01.factory.Rule01TradeRuleFactory;
 import com.liliesrosie.types.design.framework.link.model1.ILogicHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;

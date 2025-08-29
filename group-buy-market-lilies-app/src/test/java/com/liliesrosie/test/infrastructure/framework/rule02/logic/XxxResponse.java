@@ -1,4 +1,4 @@
-package com.liliesrosie.test.rule02.logic;
+package com.liliesrosie.test.infrastructure.framework.rule02.logic;
 
 /**
  * @author lingwenxu
