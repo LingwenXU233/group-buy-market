@@ -1,5 +1,6 @@
 package com.liliesrosie.infrastructure.dao.po;
 
+import com.liliesrosie.infrastructure.dao.po.base.Page;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +18,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GroupBuyOrderList {
+public class GroupBuyOrderList extends Page {
     private Long id;
     private String userId;
     private String teamId;
