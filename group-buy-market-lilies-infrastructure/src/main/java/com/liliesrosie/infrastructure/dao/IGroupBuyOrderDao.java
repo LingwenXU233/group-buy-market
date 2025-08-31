@@ -3,6 +3,9 @@ package com.liliesrosie.infrastructure.dao;
 import com.liliesrosie.infrastructure.dao.po.GroupBuyOrder;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author lingwenxu
  * @description
@@ -24,5 +27,11 @@ public interface IGroupBuyOrderDao {
     int updateOrderStatus2COMPLETE(String teamId);
 
     int updateAddCompleteCount(String teamId);
+
+    List<GroupBuyOrder> queryGroupBuyTeamByTeamIds(Set<String> teamIds);
+
+    int queryAllTeamCount(Set<String> teamIds);
+    int queryAllTeamCompleteCount(Set<String> teamIds);
+    int queryAllUserCount(Set<String> teamIds);
 
 }
