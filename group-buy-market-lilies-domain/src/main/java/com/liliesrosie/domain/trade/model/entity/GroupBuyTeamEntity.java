@@ -1,6 +1,7 @@
 package com.liliesrosie.domain.trade.model.entity;
 
 import com.liliesrosie.domain.trade.model.valobj.GroupBuyOrderEnumVO;
+import com.liliesrosie.domain.trade.model.valobj.NotifyConfigVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GroupBuyTeamEntity {
+
     /** 拼单组队ID */
     private String teamId;
     /** 活动ID */
@@ -36,6 +38,7 @@ public class GroupBuyTeamEntity {
     /** 活动结束时间 */
     private Date validEndTime;
 
-    private String notifyUrl;
+    /** 回调任务相关信息 */
+    private NotifyConfigVO notifyConfigVO;
 
 }

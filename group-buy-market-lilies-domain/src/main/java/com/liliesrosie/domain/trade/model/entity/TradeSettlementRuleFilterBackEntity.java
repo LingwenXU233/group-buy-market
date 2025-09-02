@@ -1,6 +1,7 @@
 package com.liliesrosie.domain.trade.model.entity;
 
 import com.liliesrosie.domain.trade.model.valobj.GroupBuyOrderEnumVO;
+import com.liliesrosie.domain.trade.model.valobj.NotifyConfigVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,6 +35,6 @@ public class TradeSettlementRuleFilterBackEntity {
     private Date validStartTime;
     /** 拼团结束时间 - 拼团有效时长 */
     private Date validEndTime;
-
-    private String notifyUrl;
+    /* 回调任务相关信息 */
+    private NotifyConfigVO notifyConfigVO;
 }

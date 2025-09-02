@@ -23,6 +23,14 @@ public class NotifyTaskEntity {
     /**
      * 回调接口
      */
+    private String notifyType;
+    /**
+     * 回调接口
+     */
+    private String notifyMq;
+    /**
+     * 回调接口
+     */
     private String notifyUrl;
     /**
      * 回调次数
