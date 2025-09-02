@@ -1,5 +1,6 @@
 package com.liliesrosie.domain.trade.model.entity;
 
+import com.liliesrosie.domain.trade.model.valobj.NotifyConfigVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +34,6 @@ public class PayDiscountEntity {
     /** 外部交易单号-确保外部调用唯一幂等 */
     private String outTradeNo;
 
-    /** 透传 回调地址 */
-    private String notifyUrl;
+    /** 透传 回调信息 */
+    private NotifyConfigVO notifyConfigVO;
 }

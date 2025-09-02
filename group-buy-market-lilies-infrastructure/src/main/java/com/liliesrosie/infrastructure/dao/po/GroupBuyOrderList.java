@@ -31,6 +31,7 @@ public class GroupBuyOrderList extends Page {
     private String channel;
     private BigDecimal originalPrice;
     private BigDecimal deductionPrice;
+    private BigDecimal payPrice;
     private Integer status;
     private String outTradeNo;
     /** 外部交易时间 */

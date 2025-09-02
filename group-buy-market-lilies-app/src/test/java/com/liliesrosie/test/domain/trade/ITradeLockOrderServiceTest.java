@@ -13,6 +13,8 @@ import com.liliesrosie.domain.trade.model.entity.MarketPayOrderEntity;
 import com.liliesrosie.domain.trade.model.entity.PayActivityEntity;
 import com.liliesrosie.domain.trade.model.entity.PayDiscountEntity;
 import com.liliesrosie.domain.trade.model.entity.UserEntity;
+import com.liliesrosie.domain.trade.model.valobj.NotifyConfigVO;
+import com.liliesrosie.domain.trade.model.valobj.NotifyTypeEnumVO;
 import com.liliesrosie.domain.trade.service.ITradeLockOrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -51,6 +53,7 @@ public class ITradeLockOrderServiceTest {
         String channel = "c01";
         String outTradeNo = RandomStringUtils.randomNumeric(12);
         String notifyUrl = "http://127.0.0.1:8091/api/v1/test/group_buy_notify";
+        String notifyType = "http";
 
         // 1. 获取试算优惠，有【activityId】优先使用
         TrialBalanceEntity trialBalanceEntity = indexGroupBuyMarketService.indexMarketTrial(MarketProductEntity.builder()
@@ -90,7 +93,10 @@ public class ITradeLockOrderServiceTest {
                         .originalPrice(trialBalanceEntity.getOriginalPrice())
                         .deductionPrice(trialBalanceEntity.getDeductionPrice())
                         .outTradeNo(outTradeNo)
-                        .notifyUrl(notifyUrl)
+                        .notifyConfigVO(NotifyConfigVO.builder()
+                                .notifyType(NotifyTypeEnumVO.valueOf(notifyUrl))
+                                .notifyUrl(notifyUrl)
+                                .build())
                         .build());
 
         log.info("测试结果(New):{}",JSON.toJSONString(marketPayOrderEntityNew));

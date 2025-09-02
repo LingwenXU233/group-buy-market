@@ -34,5 +34,6 @@ public class GroupBuyOrder {
     private Date updateTime;
     private Date validStartTime;
     private Date validEndTime;
+    private String notifyType;
     private String notifyUrl;
 }
