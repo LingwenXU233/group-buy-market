@@ -28,7 +28,6 @@ public class TeamSuccessTopicListener {
                     key = "${spring.rabbitmq.config.producer.topic_team_success.routing_key}"
             )
     )
-
     public void listener(String message) {
         log.info("接收消息:{}", message);
     }

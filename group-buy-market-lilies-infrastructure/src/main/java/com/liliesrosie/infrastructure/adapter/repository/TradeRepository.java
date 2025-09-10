@@ -134,8 +134,8 @@ public class TradeRepository implements ITradeRepository {
             groupBuyOrderDao.insert(groupBuyOrder);
         }else{
             // 更新记录 - 如果更新记录不等于1，则表示拼团已满，抛出异常
-            int updateAddTargetCount = groupBuyOrderDao.updateAddLockCount(teamId);
-            if (1 != updateAddTargetCount) {
+            int updateAddLockCount = groupBuyOrderDao.updateAddLockCount(teamId);
+            if (1 != updateAddLockCount) {
                 throw new AppException(ResponseCode.E005.getCode(), ResponseCode.E005.getInfo());
             }
         }
