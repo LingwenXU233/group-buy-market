@@ -7,15 +7,13 @@ Group Buy Project is a Spring Boot-based backend system designed to support grou
 The project follows a Domain-Driven Design (DDD) layered architecture to achieve clear separation of concerns, scalability, and maintainability.
 
 ### 🚀 Key Features
- 
 
+* Services Decoupling: RabbitMQ for decoupling payment service, service and group-buy services.
 * High-Concurrency Idempotency: Redis-based distributed locks to prevent duplicate settlement execution.
-
-* Asynchronous Decoupling: RabbitMQ (topic mode) for decoupling payment service, service and group-buy services.
-
-* Pluggable Rule Engine: Flexible settlement rule chain with dynamic extension support.
-
-* Engineering Practices: Multi-module Maven project with unified exception handling and configuration management.
+* DCC 
+* Transaction Consistency: Ensured atomicity of order creation and order status updating through database transactions, preventing data inconsistency.
+* Performance Optimization: Used RabbitMQ + async callbacks in group-buy settlement to improve throughput and responsiveness.
+* Engineering Practices: Multi-module Maven project with unified exception handling management, improving maintainability and code quality.
 
 ### 🏗️ Architecture
 ```html
@@ -27,19 +25,14 @@ Types Layer             -> Shared definitions (exceptions, enums, design pattern
 Infrastructure Layer    -> Database/ Redis/ rabbitMq/ okhttp
 ```
 
-### 🎯 Use Cases & Functional Requirements
-| Use Case (UC)                                 | Functional Requirement (FR)                                                                                                                                                                    |
-|-----------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| UC1: Browse Group-buy Product                 | FR1.1: The system must allow users to browse the discounted price of each group-buy product, which is calculated upon activity details, discount information, and product details.             |
-|                                               | FR1.2: The system must allow users to view available products with associated activity and discount information.                                                                               |
-|                                               | FR1.3: The system must ensure that the response time does not exceed **150 ms**.                                                                                                               |
-| UC2: Collect Crowd Tag                        | FR2.1:                                                                                                                                                                                         |
-| UC3: Configure Activity Parameter Dynamically | FR3.1:                                                                                                                                                                                         | 
-| UC4: Place Group-buy Order                    | FR4.1: The system must lock the group-buy order first when placing group-buy order                                                                                                             |
-|                                               | FR4.2: The system shall verify whether a user is eligible to place a group-buy order before locking it (verify activity valid time period)                                                     |
-|                                               | FR4.3: The system shall verify if every group member has finished their payment after receiving the callback message.                                                                          |
-|                                               | FR4.4: The system shall validate the group-buy order conditions, including channel/ source validity and payment time within the activity period, before verifying group-buy order eligibility. |
-|                                               | FR4.5: The system shall implement a task callback mechanism to notify external microservices, with a job compensation mechanism to handle failures or retries.                                                                                               |
+### 🎯 Functional Requirements & Implementation Detail
+| **Functional Requirement**             | **Implementation Detail**                                                                                                                                                                                                                                                                                                           |
+|----------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| FR1: Product Discount Calculation      | Applied the Rule Tree design pattern to decouple complex discount logic; <br/> Used multi-threaded asynchronous data retrieval to improve service API responsiveness; <br/> Adopted Strategy Pattern with dependency injection to flexibly support multiple discount types.                                                         |
+| FR2: Crowd Tagging                     | Stored and updated user tag info with Redis Bitmap for efficient large-scale queries.                                                                                                                                                                                                                                               |
+| FR3: Dynamic Activity Parameter Update | Introduced the Dynamic Configuration Control (DCC) component to enable dynamic configuration parameter updates (like source/ channel restriction, crowd tag restriction), avoiding costly server restarts.                                                                                                                          |
+| FR4: Order Locking                     | Implemented order locking before payment to prevent overselling; <br/> Applied idempotency validation in order locking procedure to avoid duplicate requests.                                                                                                                                                                       |
+| FR5: Group-buy Settlement              | Used Chain of Responsibility Pattern to handle frequently changing settlement rules; <br/> Integrated RabbitMQ and local multi-thread async for callback tasks, with scheduled compensation for failed or missed callbacks; <br/> Applied Redis-based distributed lock to prevent repeated execution of the same notification task. |
 
 ### 🔧 Tech Stack
 * Language/Frameworks: Java 17, Spring Boot, MyBatis
@@ -49,12 +42,10 @@ Infrastructure Layer    -> Database/ Redis/ rabbitMq/ okhttp
 ### 📝 What I Learned
 Through this project, I gained experience in:
 
-* Translating business requirements into scalable technical solutions
+* Translating business requirements into scalable technical solutions.
 
-* Ensuring consistency and idempotency in distributed systems
+* Designing modular, extensible backend systems DDD architecture to reduce coupling within layer.
 
-* Designing modular, extensible backend systems DDD architecture to reduce coupling within layer. 
+* Implementing microservices communication with rabbitMq. 
 
-* Applied design pattern framework(such as Responsibility Chain) to improve code flexibility and scalability.
-
-* Implemented communication between microservices. 
+* Applied design pattern framework(such as Chain of Responsibility) to improve code flexibility and scalability.
