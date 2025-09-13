@@ -6,5 +6,5 @@ package com.liliesrosie.types.design.framework.link.model2;
  * @create 2025-08-21 17:47
  */
 public interface ILogicHandler<T, D, R> {
-    R apply(T requestParam, D dynamicContext) throws Exception;
+    R apply(T requestParameter, D dynamicContext) throws Exception;
 }

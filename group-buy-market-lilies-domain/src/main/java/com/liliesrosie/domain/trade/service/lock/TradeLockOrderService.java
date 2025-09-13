@@ -64,6 +64,13 @@ public class TradeLockOrderService implements ITradeLockOrderService {
                 .build();
 
         // 锁定聚合订单 - 这会用户只是下单还没有支付。后续会有2个流程；支付成功、超时未支付（回退）
-        return repository.lockMarketPayOrder(groupBuyOrderAggregate);
+        try {
+            return repository.lockMarketPayOrder(groupBuyOrderAggregate);
+        }
+        catch (Exception e){
+            // 记录失败恢复量
+            repository.recoveryTeamSlot(tradeRuleFilterBackEntity.getRecoveryTeamSlotKey(), payActivityEntity.getValidTime());
+            throw e;
+        }
     }
 }
