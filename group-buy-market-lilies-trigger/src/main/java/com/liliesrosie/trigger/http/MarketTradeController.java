@@ -70,7 +70,10 @@ public class MarketTradeController implements IMarketTradeService {
                         .build();
             }
 
+
             MarketPayOrderEntity marketPayOrderEntity = tradeOrderService.queryNoPayMarketPayOrderByOutTradeNo(userId, outTradeNo);
+            // Condition: user has already ordered before, so a lock record exists
+            // Action: return
             if(marketPayOrderEntity != null){
                 LockMarketPayOrderResponseDTO lockMarketPayOrderResponseDTO = LockMarketPayOrderResponseDTO.builder()
                         .tradeOrderStatus(marketPayOrderEntity.getTradeOrderStatusEnumVO().getCode())
@@ -85,13 +88,14 @@ public class MarketTradeController implements IMarketTradeService {
                         .build();
             }
 
-            // 不存在：没有参与过该拼团
-            // 判断拼团锁单是否完成了目标
+            // * Condition: lock record doesn't exist, user hasn't placed an order before
+
+            // ** Condition: if user want to join in group(teamId)
+            // ** Action: check whether the group(teamId) has already reached the target
             if (teamId != null){
                 GroupBuyProgressVO groupBuyProgressVO = tradeOrderService.queryGroupBuyProgress(teamId);
-                // 已达成
+                // Condition: if reached the target
                 if (null != groupBuyProgressVO && Objects.equals(groupBuyProgressVO.getTargetCount(), groupBuyProgressVO.getLockCount())) {
-//                    log.info("交易锁单拦截-拼单目标已达成:{} {}", userId, teamId);
                     log.info("交易锁单拦截-拼单目标已达成:{} {}, target:{}, lock:{}", userId, teamId, groupBuyProgressVO.getTargetCount(),  groupBuyProgressVO.getLockCount());
                     return Response.<LockMarketPayOrderResponseDTO>builder()
                             .code(ResponseCode.E006.getCode())

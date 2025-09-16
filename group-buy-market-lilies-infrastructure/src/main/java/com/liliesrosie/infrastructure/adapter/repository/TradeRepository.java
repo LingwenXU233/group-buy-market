@@ -379,7 +379,7 @@ public class TradeRepository implements ITradeRepository {
         // 2.1 从有组队量开始，相当于已经有了一个占用量，所以要 +1
         long occupy = redisService.incr(teamSlotKey) + 1;
 
-        if(occupy > target + recoveryCount){
+        if(occupy >= target + recoveryCount){
             redisService.setAtomicLong(teamSlotKey, target);
             return false;
         }

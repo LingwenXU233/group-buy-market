@@ -48,6 +48,10 @@
             <groupId>com.liliesrosie</groupId>
             <artifactId>group-buy-market-lilies-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.liliesrosie</groupId>
+            <artifactId>group-buy-market-lilies-infrastructure</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
