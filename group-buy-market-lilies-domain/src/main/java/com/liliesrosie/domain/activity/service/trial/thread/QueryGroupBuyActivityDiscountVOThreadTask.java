@@ -44,10 +44,11 @@ public class QueryGroupBuyActivityDiscountVOThreadTask implements Callable<Group
     @Override
     public GroupBuyActivityDiscountVO call() throws Exception {
         // 通过商品信息查询 配置的相关活动id
-        SCProductActivityVO scProductActivityVO = activityRepository.querySCProductActivityBySCGoodsId(source, channel,goodsId);
+        SCProductActivityVO scProductActivityVO = activityRepository.querySCProductActivityBySCGoodsId(source, channel, goodsId);
         if(scProductActivityVO == null) return null;
 
         // 通过活动id得到具体活动信息
-        return activityRepository.queryGroupBuyActivityDiscountVO(scProductActivityVO.getActivityId());
+        GroupBuyActivityDiscountVO groupBuyActivityDiscountVO= activityRepository.queryGroupBuyActivityDiscountVO(scProductActivityVO.getActivityId());
+        return groupBuyActivityDiscountVO;
     }
 }

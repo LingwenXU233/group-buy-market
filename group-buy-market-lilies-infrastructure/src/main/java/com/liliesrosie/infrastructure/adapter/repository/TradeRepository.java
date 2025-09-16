@@ -15,10 +15,12 @@ import com.liliesrosie.infrastructure.dao.po.GroupBuyOrder;
 import com.liliesrosie.infrastructure.dao.po.GroupBuyOrderList;
 import com.liliesrosie.infrastructure.dao.po.NotifyTask;
 import com.liliesrosie.infrastructure.dcc.DCCService;
+import com.liliesrosie.infrastructure.redis.RedissonService;
 import com.liliesrosie.types.common.Constants;
 import com.liliesrosie.types.enums.ActivityStatusEnumVO;
 import com.liliesrosie.types.enums.ResponseCode;
 import com.liliesrosie.types.exception.AppException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author lingwenxu
@@ -35,6 +38,7 @@ import java.util.*;
  * @create 2025-08-20 14:17
  */
 @Repository
+@Slf4j
 public class TradeRepository implements ITradeRepository {
 
     @Resource
@@ -51,6 +55,9 @@ public class TradeRepository implements ITradeRepository {
 
     @Resource
     DCCService dccService;
+
+    @Resource
+    RedissonService redisService;
 
     @Value("${spring.rabbitmq.config.producer.topic_team_success.routing_key}")
     private String topic_team_success;
@@ -359,5 +366,40 @@ public class TradeRepository implements ITradeRepository {
     @Override
     public int updateNotifyTaskStatusRetry(String teamId) {
         return notifyTaskDao.updateNotifyTaskStatusRetry(teamId);
+    }
+
+    @Override
+    public boolean occupyTeamSlot(Integer target, Integer validTime, String teamSlotKey, String recoveryTeamSlotKey) {
+
+        // 1. get the recovery count from redis
+        Long recoveryCount = redisService.getAtomicLong(recoveryTeamSlotKey);
+        recoveryCount = (null == recoveryCount) ? 0: recoveryCount;
+
+        // 2. incr 得到值，与总量和恢复量做对比。恢复量为系统失败时候记录的量。
+        // 2.1 从有组队量开始，相当于已经有了一个占用量，所以要 +1
+        long occupy = redisService.incr(teamSlotKey) + 1;
+
+        if(occupy >= target + recoveryCount){
+            redisService.setAtomicLong(teamSlotKey, target);
+            return false;
+        }
+
+        // 3. 给每个slot加锁
+        String lockKey = teamSlotKey + Constants.UNDERLINE + occupy;
+        Boolean lock = redisService.setNx(lockKey, validTime + 60, TimeUnit.MINUTES);
+
+        if(!lock){
+            log.info("组队库存加锁失败 {}", lockKey);
+        }
+
+        return lock;
+    }
+
+    @Override
+    public void recoveryTeamSlot(String recoveryTeamLockKey, Integer validTime) {
+        // 首次组队拼团，是没有 teamId 的，所以不需要这个做处理。
+        if (StringUtils.isBlank(recoveryTeamLockKey)) return;
+
+        redisService.incr(recoveryTeamLockKey);
     }
 }

@@ -4,6 +4,7 @@ import com.liliesrosie.domain.trade.model.entity.GroupBuyActivityEntity;
 import com.liliesrosie.domain.trade.model.entity.TradeLockRuleCommandEntity;
 import com.liliesrosie.domain.trade.model.entity.TradeLockRuleFilterBackEntity;
 import com.liliesrosie.domain.trade.service.lock.filter.ActivityUsibilityRuleFilter;
+import com.liliesrosie.domain.trade.service.lock.filter.TeamStockOccupyRuleFilter;
 import com.liliesrosie.domain.trade.service.lock.filter.UserTakeLimitRuleFilter;
 import com.liliesrosie.types.design.framework.link.model2.BusinessLinkedList;
 import com.liliesrosie.types.design.framework.link.model2.BusinessLinkedListBuilder;
@@ -12,6 +13,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +27,12 @@ import org.springframework.stereotype.Service;
 public class TradeLockRuleFilterFactory {
 
     @Bean("tradeLockRuleFilterChain")
-    BusinessLinkedList<TradeLockRuleCommandEntity, DynamicContext, TradeLockRuleFilterBackEntity> tradeRuleFilterChain(ActivityUsibilityRuleFilter activityUsibilityRuleFilter, UserTakeLimitRuleFilter userTakeLimitRuleFilter){
+    BusinessLinkedList<TradeLockRuleCommandEntity, DynamicContext, TradeLockRuleFilterBackEntity> tradeRuleFilterChain(ActivityUsibilityRuleFilter activityUsibilityRuleFilter, UserTakeLimitRuleFilter userTakeLimitRuleFilter, TeamStockOccupyRuleFilter teamStockOccupyRuleFilter){
 
-        BusinessLinkedListBuilder<TradeLockRuleCommandEntity, DynamicContext, TradeLockRuleFilterBackEntity> businessLinkedListBuilder = new BusinessLinkedListBuilder<>("交易规则过滤链", activityUsibilityRuleFilter, userTakeLimitRuleFilter);
+        BusinessLinkedListBuilder<TradeLockRuleCommandEntity, DynamicContext, TradeLockRuleFilterBackEntity> businessLinkedListBuilder = new BusinessLinkedListBuilder<>("交易规则过滤链",
+                activityUsibilityRuleFilter,
+                userTakeLimitRuleFilter,
+                teamStockOccupyRuleFilter);
         return businessLinkedListBuilder.getLinkedList();
     }
 
@@ -36,7 +41,20 @@ public class TradeLockRuleFilterFactory {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class DynamicContext{
+
+        private String teamSlotKey = "group_buy_market_team_stock_key_";
         private GroupBuyActivityEntity groupBuyActivity;
+        private Integer userTakeOrderCount;
+
+        public String generateTeamSlotKey(String teamId) {
+            if (StringUtils.isBlank(teamId)) return null;
+            return teamSlotKey + groupBuyActivity.getActivityId() + "_" + teamId;
+        }
+
+        public String generateRecoveryTeamSlotKey(String teamId) {
+            if (StringUtils.isBlank(teamId)) return null;
+            return teamSlotKey + groupBuyActivity.getActivityId() + "_" + teamId + "_recovery";
+        }
     }
 
 }

@@ -7,6 +7,7 @@ import com.liliesrosie.domain.trade.model.entity.GroupBuyTeamEntity;
 import com.liliesrosie.domain.trade.model.entity.MarketPayOrderEntity;
 import com.liliesrosie.domain.trade.model.entity.NotifyTaskEntity;
 import com.liliesrosie.domain.trade.model.valobj.GroupBuyProgressVO;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -44,5 +45,9 @@ public interface ITradeRepository {
     int updateNotifyTaskStatusError(String teamId);
 
     int updateNotifyTaskStatusRetry(String teamId);
+
+    boolean occupyTeamSlot(Integer target, Integer validTime, String teamSlotKey, String recoveryTeamSlotKey);
+
+    void recoveryTeamSlot(String recoveryTeamStockKey, Integer validTime);
 
 }
