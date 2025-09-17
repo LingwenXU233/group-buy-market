@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @create 2025-08-13 14:50
  */
 @Repository
-public class ActivityRepository implements IActivityRepository {
+public class ActivityRepository extends AbstractRepository implements IActivityRepository {
 
     @Resource
     private IGroupBuyActivityDao groupBuyActivityDao;
@@ -69,13 +69,18 @@ public class ActivityRepository implements IActivityRepository {
     @Override
     public GroupBuyActivityDiscountVO queryGroupBuyActivityDiscountVO(Long activityId) {
 
+        // apply the retrieval strategy here
+        GroupBuyActivity groupBuyActivityRes = getFromCacheOrDb(GroupBuyActivity.cacheRedisKey(activityId),
+                ()->{return groupBuyActivityDao.queryValidGroupBuyActivityById(activityId);});
 
-        GroupBuyActivity groupBuyActivityRes = groupBuyActivityDao.queryValidGroupBuyActivityById(activityId);
         if (null == groupBuyActivityRes) return null;
 
         String discountId = groupBuyActivityRes.getDiscountId();
 
-        GroupBuyDiscount groupBuyDiscountRes = groupBuyDiscountDao.queryGroupBuyActivityDiscountByDiscountId(discountId);
+        // apply the retrieval strategy here
+        GroupBuyDiscount groupBuyDiscountRes = getFromCacheOrDb(GroupBuyDiscount.cacheRedisKey(discountId),
+                ()->{return groupBuyDiscountDao.queryGroupBuyActivityDiscountByDiscountId(discountId);});
+
         GroupBuyActivityDiscountVO.GroupBuyDiscount groupBuyDiscount = GroupBuyActivityDiscountVO.GroupBuyDiscount.builder()
                 .discountName(groupBuyDiscountRes.getDiscountName())
                 .discountDesc(groupBuyDiscountRes.getDiscountDesc())
